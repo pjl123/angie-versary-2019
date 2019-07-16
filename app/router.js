@@ -7,6 +7,9 @@ const Router = EmberRouter.extend({
 });
 
 Router.map(function() {
+  this.route('2019', function() {
+    this.route('cross-compatibility');
+  });
 });
 
 export default Router;

@@ -1,0 +1,11 @@
+<table class="table table-bordered">
+  <tbody>
+    {{#each gridRows as |gridRow|}}
+      <tr>
+        {{#each gridRow as |gridSquare|}}
+          <td>{{gridSquare}}</td>
+        {{/each}}
+      </tr>
+    {{/each}}
+  </tbody>
+</table>
