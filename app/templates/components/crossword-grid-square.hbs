@@ -1,1 +1,7 @@
-{{yield}}
+{{#if squareInfo.answer}}
+  <Input @type="text" @value={{userInput}} @size="1" @maxlength="1" />
+{{/if}}
+
+{{#if squareInfo.label}}
+  {{squareInfo.label}}
+{{/if}}

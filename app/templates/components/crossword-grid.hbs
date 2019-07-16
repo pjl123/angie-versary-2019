@@ -3,7 +3,7 @@
     {{#each gridRows as |gridRow|}}
       <tr>
         {{#each gridRow as |gridSquare|}}
-          <td>{{gridSquare}}</td>
+          {{crossword-grid-square squareInfo=gridSquare}}
         {{/each}}
       </tr>
     {{/each}}

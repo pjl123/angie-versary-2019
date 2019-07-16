@@ -7,15 +7,42 @@ export default Component.extend({
   init() {
     this._super(...arguments);
     
-    var grid = new Array(this.get('height') * this.get('width')).fill('');
+    var grid = new Array(this.get('height') * this.get('width')).fill({});
     var totalCorrectLetters = 0;
     var data = this.get('crosswordData');
     for (var i = 0; i < data.length; i++) {
       var entry = data[i];
       totalCorrectLetters += entry.answerKey.length;
       var currPosition = entry.startCoordinate.x + this.get('width') * entry.startCoordinate.y;
+
       for (var j = 0; j < entry.answerKey.length; j++) {
-        grid[currPosition] = entry.answerKey[j];
+        if (j === 0) {
+          var labelPosition;
+          if (entry.orientation === 'vertical') {
+            if (entry.startCoordinate.y === 0) {
+              labelPosition = currPosition - 1;
+            }
+            else {
+              labelPosition = currPosition - this.get('width');
+            }
+          }
+          else {
+            if (entry.startCoordinate.x === 0) {
+              labelPosition = currPosition - this.get('width');
+            }
+            else {
+              labelPosition = currPosition - 1;
+            }
+          }
+          
+          grid[labelPosition] = {
+            label: entry.id
+          };
+        }
+
+        grid[currPosition] = {
+          answer: entry.answerKey[j],
+        };
         if (entry.orientation === 'horizontal') {
           currPosition += 1;
         }
@@ -25,7 +52,7 @@ export default Component.extend({
       }
     }
     var gridRows = [];
-    for (var i = 0; i < this.get('height'); i++) {
+    for (i = 0; i < this.get('height'); i++) {
       gridRows.push(grid.slice(i * this.get('width'), (i + 1) * this.get('width')));
     }
     this.set('gridRows', gridRows);
