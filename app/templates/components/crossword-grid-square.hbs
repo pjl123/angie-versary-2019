@@ -1,5 +1,5 @@
 {{#if squareInfo.answer}}
-  <Input @type="text" @value={{userInput}} @size="1" @maxlength="1" />
+  <Input @type="text" @value={{userInput}} @size="1" @maxlength="1" @key-up={{action "answerEntered"}} />
 {{/if}}
 
 {{#if squareInfo.label}}

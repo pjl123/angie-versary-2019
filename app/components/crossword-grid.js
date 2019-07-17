@@ -3,16 +3,16 @@ import Component from '@ember/component';
 export default Component.extend({
   height: 22,
   width: 32,
+  currentTally: 0,
 
   init() {
     this._super(...arguments);
     
     var grid = new Array(this.get('height') * this.get('width')).fill({});
     var totalCorrectLetters = 0;
-    var data = this.get('crosswordData');
+    var data = this.get('crosswordData')();
     for (var i = 0; i < data.length; i++) {
       var entry = data[i];
-      totalCorrectLetters += entry.answerKey.length;
       var currPosition = entry.startCoordinate.x + this.get('width') * entry.startCoordinate.y;
 
       for (var j = 0; j < entry.answerKey.length; j++) {
@@ -36,13 +36,17 @@ export default Component.extend({
           }
           
           grid[labelPosition] = {
-            label: entry.id
+            label: entry.id,
           };
         }
 
-        grid[currPosition] = {
-          answer: entry.answerKey[j],
-        };
+        if (!grid[currPosition].answer) {
+          totalCorrectLetters += 1;
+            grid[currPosition] = {
+            answer: entry.answerKey[j].toUpperCase(),
+          };
+        }
+        
         if (entry.orientation === 'horizontal') {
           currPosition += 1;
         }
@@ -57,120 +61,132 @@ export default Component.extend({
     }
     this.set('gridRows', gridRows);
     this.set('totalCorrectLetters', totalCorrectLetters);
+    this.set('acrossQuestions', data.filterBy('orientation', 'horizontal').sortBy('id'));
+    this.set('downQuestions', data.filterBy('orientation', 'vertical').sortBy('id'));
   },
 
-  crosswordData: [
-    {
-      orientation: 'horizontal',
-      startCoordinate: {x:24,y:20},
-      question: 'Where most people get matching tattoos, right?',
-      answerKey: 'LASVEGAS',
-      id: 16
-    },
-    {
-      orientation: 'horizontal',
-      startCoordinate: {x:0,y:12},
-      question: 'City we want to move to',
-      answerKey: 'SANDIEGO',
-      id: 11
-    },
-    {
-      orientation: 'vertical',
-      startCoordinate: {x:1,y:11},
-      question: 'Where we got our baby',
-      answerKey: 'PARADISE',
-      id: 10
-    },
-    {
-      orientation: 'horizontal',
-      startCoordinate: {x:21,y:10},
-      question: 'Where we should really buy our first house',
-      answerKey: 'JERSEYSHORE',
-      id: 9
-    },
-    {
-      orientation: 'vertical',
-      startCoordinate: {x:5,y:9},
-      question: '2021 vacation location',
-      answerKey: 'OUTERBANKS',
-      id: 7
-    },
-    {
-      orientation: 'vertical',
-      startCoordinate: {x:30,y:3},
-      question: 'Number of kids to raise',
-      answerKey: 'TWOORTHREE',
-      id: 3
-    },
-    {
-      orientation: 'vertical',
-      startCoordinate: {x:16,y:6},
-      question: 'Number of pets to have',
-      answerKey: 'TWO',
-      id: 4
-    },
-    {
-      orientation: 'vertical',
-      startCoordinate: {x:10,y:9},
-      question: 'Fitness goal for the wedding',
-      answerKey: 'SIXPACKABS',
-      id: 8
-    },
-    {
-      orientation: 'vertical',
-      startCoordinate: {x:14,y:13},
-      question: 'Best type of food',
-      answerKey: 'CHEESE',
-      id: 13
-    },
-    {
-      orientation: 'horizontal',
-      startCoordinate: {x:14,y:16},
-      question: 'Coolest food-based instagram account',
-      answerKey: 'EATODYSSEYPHILLY',
-      id: 14
-    },
-    {
-      orientation: 'vertical',
-      startCoordinate: {x:28,y:0},
-      question: 'Most important meal of the day',
-      answerKey: 'BOOZYBRUNCH',
-      id: 2
-    },
-    {
-      orientation: 'vertical',
-      startCoordinate: {x:22,y:6},
-      question: 'Best dessert',
-      answerKey: 'CREMEBRULEE',
-      id: 5
-    },
-    {
-      orientation: 'vertical',
-      startCoordinate: {x:25,y:0},
-      question: 'Best TV Show of all time',
-      answerKey: '90DAYFIANCETHEOTHERWAY',
-      id: 1
-    },
-    {
-      orientation: 'horizontal',
-      startCoordinate: {x:12,y:13},
-      question: 'Favorite sport to play',
-      answerKey: 'SOCCER',
-      id: 12
-    },
-    {
-      orientation: 'horizontal',
-      startCoordinate: {x:15,y:8},
-      question: '#1 alternative career option',
-      answerKey: 'POTFARMER',
-      id: 6
-    },
-    {
-      orientation: 'horizontal',
-      startCoordinate: {x:3,y:18},
-      question: 'Best haunted house to skip because the line is crazy long',
-      answerKey: 'EASTERNSTATEPENITENTIARY',
-      id: 15
+  crosswordData() {
+    return [
+      {
+        orientation: 'horizontal',
+        startCoordinate: {x:24,y:20},
+        question: 'Where most people get matching tattoos, right?',
+        answerKey: 'LASVEGAS',
+        id: 16
+      },
+      {
+        orientation: 'horizontal',
+        startCoordinate: {x:0,y:12},
+        question: 'City we want to move to',
+        answerKey: 'SANDIEGO',
+        id: 11
+      },
+      {
+        orientation: 'vertical',
+        startCoordinate: {x:1,y:11},
+        question: 'Where we got our baby',
+        answerKey: 'PARADISE',
+        id: 10
+      },
+      {
+        orientation: 'horizontal',
+        startCoordinate: {x:21,y:10},
+        question: 'Where we should really buy our first house',
+        answerKey: 'JERSEYSHORE',
+        id: 9
+      },
+      {
+        orientation: 'vertical',
+        startCoordinate: {x:5,y:9},
+        question: '2021 vacation location',
+        answerKey: 'OUTERBANKS',
+        id: 7
+      },
+      {
+        orientation: 'vertical',
+        startCoordinate: {x:30,y:3},
+        question: 'Number of kids to raise',
+        answerKey: 'TWOORTHREE',
+        id: 3
+      },
+      {
+        orientation: 'vertical',
+        startCoordinate: {x:16,y:6},
+        question: 'Number of pets to have',
+        answerKey: 'TWO',
+        id: 4
+      },
+      {
+        orientation: 'vertical',
+        startCoordinate: {x:10,y:9},
+        question: 'Fitness goal for the wedding',
+        answerKey: 'SIXPACKABS',
+        id: 8
+      },
+      {
+        orientation: 'vertical',
+        startCoordinate: {x:14,y:13},
+        question: 'Best type of food',
+        answerKey: 'CHEESE',
+        id: 13
+      },
+      {
+        orientation: 'horizontal',
+        startCoordinate: {x:14,y:16},
+        question: 'Coolest food-based instagram account',
+        answerKey: 'EATODYSSEYPHILLY',
+        id: 14
+      },
+      {
+        orientation: 'vertical',
+        startCoordinate: {x:28,y:0},
+        question: 'Most important meal of the day',
+        answerKey: 'BOOZYBRUNCH',
+        id: 2
+      },
+      {
+        orientation: 'vertical',
+        startCoordinate: {x:22,y:6},
+        question: 'Best dessert',
+        answerKey: 'CREMEBRULEE',
+        id: 5
+      },
+      {
+        orientation: 'vertical',
+        startCoordinate: {x:25,y:0},
+        question: 'Best TV Show of all time',
+        answerKey: '90DAYFIANCETHEOTHERWAY',
+        id: 1
+      },
+      {
+        orientation: 'horizontal',
+        startCoordinate: {x:12,y:13},
+        question: 'Favorite sport to play',
+        answerKey: 'SOCCER',
+        id: 12
+      },
+      {
+        orientation: 'horizontal',
+        startCoordinate: {x:15,y:8},
+        question: '#1 alternative career option',
+        answerKey: 'POTFARMER',
+        id: 6
+      },
+      {
+        orientation: 'horizontal',
+        startCoordinate: {x:3,y:18},
+        question: 'Best haunted house to skip because the line is crazy long',
+        answerKey: 'EASTERNSTATEPENITENTIARY',
+        id: 15
+      }
+    ];
+  },
+
+  actions: {
+    tallyAnswers(tally) {
+      var currentTally = this.get('currentTally');
+      this.set('currentTally', currentTally + tally);
+      this.set('puzzleComplete', currentTally === this.get('totalCorrectLetters'));
     }
-  ]
+  }
 });

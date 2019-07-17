@@ -1,11 +1,36 @@
-<table class="table table-bordered">
-  <tbody>
-    {{#each gridRows as |gridRow|}}
-      <tr>
-        {{#each gridRow as |gridSquare|}}
-          {{crossword-grid-square squareInfo=gridSquare}}
+<div class="row">
+  <div class="col-xs-10 offset-1">
+    <table class="table table-bordered">
+      <tbody>
+        {{#each gridRows as |gridRow|}}
+          <tr>
+            {{#each gridRow as |gridSquare|}}
+              {{crossword-grid-square squareInfo=gridSquare tallyAnswers="tallyAnswers"}}
+            {{/each}}
+          </tr>
         {{/each}}
-      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+{{#if puzzleComplete}}
+  <div class="row">
+    <div class="col-xs-4 offset-1">
+      <p>COMPLETE!</p>
+    </div>
+  </div>
+{{/if}}
+<div class="row">
+  <div class="col-xs-4 offset-1">
+    <p>Across:</p>
+    {{#each acrossQuestions as |question|}}
+      <p>{{question.id}}: {{question.question}}</p>
     {{/each}}
-  </tbody>
-</table>
+  </div>
+  <div class="col-xs-4 offset-1">
+    <p>Down:</p>
+    {{#each downQuestions as |question|}}
+      <p>{{question.id}}: {{question.question}}</p>
+    {{/each}}
+  </div>
+</div>

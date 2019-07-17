@@ -1,3 +1,20 @@
-body {
+body.angie-versary-body {
+  background-color: rgb(66, 245, 236);
+}
+
+.cross-compatibility-container {
   padding-top: 50px;
+  background-color: rgb(245, 206, 66);
+}
+
+table.table-bordered td.gridSquare {
+  padding: 0;
+  background-color: black;
+  color: white;
+}
+
+table.table-bordered td.gridSquare input {
+  width: 1.75rem;
+  height: 1.75rem;
+  text-transform: uppercase;
 }
