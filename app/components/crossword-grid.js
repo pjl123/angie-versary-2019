@@ -185,7 +185,8 @@ export default Component.extend({
   actions: {
     tallyAnswers(tally) {
       var currentTally = this.get('currentTally');
-      this.set('currentTally', currentTally + tally);
+      currentTally = currentTally + tally;
+      this.set('currentTally', currentTally);
       this.set('puzzleComplete', currentTally === this.get('totalCorrectLetters'));
     }
   }

@@ -1,0 +1,34 @@
+<div class="madlibs-letter-container-background">
+  <div class="container madlibs-letter-container">
+    <div class="row">
+      <div class="col-xs-4 offset-3">
+        <h3>Answer the following Mablibs style questions:</h3>
+      </div>
+    </div>
+    <div class="row">
+      <div class="madlibs-question-container">
+        <div class="row">
+          <div class="col-xs-2 offset-3">
+            <label class="madlibs-question-label">{{currentQuestion.question}}:</label>
+          </div>
+          <div class="col-xs-2 offset-2">
+            <Input @type="text" @keyUp={{action "saveAnswer"}} @value={{currentQuestion.userAnswer}}/>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-3 offset-4">
+        <button class="btn btn-primary" {{action "previousQuestion"}}>Previous Question</button>
+      </div>
+      <div class="col-xs-3 offset-1">
+        <button class="btn btn-primary" {{action "nextQuestion"}}>Next Question</button>
+      </div>
+      {{#if onLastQuestion}}
+        <div class="col-xs-3 offset-1">
+          <LinkTo class="btn btn-primary" @route="2019.madlibs-letter.letter">Read Letter</LinkTo>
+        </div>
+      {{/if}}
+    </div>
+  </div>
+</div>

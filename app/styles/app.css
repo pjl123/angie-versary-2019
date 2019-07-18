@@ -1,10 +1,21 @@
-body.angie-versary-body {
+.cross-compatibility-container-background {
   background-color: rgb(66, 245, 236);
 }
 
 .cross-compatibility-container {
   padding-top: 50px;
   background-color: rgb(245, 206, 66);
+}
+
+.madlibs-letter-container-background {
+  background-color: rgb(66, 245, 236);
+  height: 100vh;
+}
+
+.madlibs-letter-container {
+  padding-top: 10rem;
+  background-color: rgb(245, 206, 66);
+  height: 100vh;
 }
 
 table.table-bordered td.gridSquare {
@@ -17,4 +28,23 @@ table.table-bordered td.gridSquare input {
   width: 1.75rem;
   height: 1.75rem;
   text-transform: uppercase;
+}
+
+.madlibs-question-container {
+  background-color: #e6ffff;
+  padding-top: 1rem;
+  padding-bottom: .9rem;
+  margin-bottom: .5rem;
+  margin-left: 15%;
+  margin-right: 15%;
+  width: 70%;
+}
+
+.madlibs-question-label {
+  font-size: 1.25rem;
+}
+
+.letter-textarea {
+  resize: none;
+  background-color: #e6ffff;
 }

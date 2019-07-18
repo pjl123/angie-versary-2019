@@ -9,6 +9,10 @@ const Router = EmberRouter.extend({
 Router.map(function() {
   this.route('2019', function() {
     this.route('cross-compatibility');
+    this.route('madlibs-letter', function() {
+      this.route('questions');
+      this.route('letter');
+    });
   });
 });
 
