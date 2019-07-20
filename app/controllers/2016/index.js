@@ -152,7 +152,7 @@ export default Controller.extend({
 
       var loader = new createjs.LoadQueue(false);
       loader.addEventListener("complete", this.handleComplete.bind(this));
-      loader.loadManifest(manifest, true, "../../Art/");
+      loader.loadManifest(manifest, true, "/Art/");
       this.set('loader', loader);
     }
   }
