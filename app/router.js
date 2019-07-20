@@ -14,6 +14,10 @@ Router.map(function() {
       this.route('letter');
     });
   });
+  this.route('2016', function() {
+    this.route('quiz');
+    this.route('prize');
+  });
 });
 
 export default Router;
