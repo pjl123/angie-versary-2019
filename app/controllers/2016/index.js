@@ -15,31 +15,8 @@ export default Controller.extend({
   init: function () {
     this._super();
     Ember.run.schedule("afterRender",this,function() {
-      this.setup();
+      this.send('setup');
     });
-  },
-
-  setup() {
-    var stage = new createjs.Stage("gameDisplay");
-    this.set('stage', stage);
-
-    // grab canvas width and height for later calculations:
-    var w = stage.canvas.width;
-    this.set('w', w);
-    var h = stage.canvas.height;
-    this.set('h', h);
-
-    var manifest = [
-      {src: "TurnSpriteSheet.png", id: "Pat"},
-      {src: "Pointer.png", id: "pointer"},
-      {src: "Background.png", id: "background"},
-      {src: "Heart.png", id: "heart"}
-    ];
-
-    var loader = new createjs.LoadQueue(false);
-    loader.addEventListener("complete", this.handleComplete.bind(this));
-    loader.loadManifest(manifest, true, "../../Art/");
-    this.set('loader', loader);
   },
 
   handleComplete() {
@@ -153,5 +130,30 @@ export default Controller.extend({
             
   heartClick(){
     this.transitionToRoute('2016.quiz');
+  },
+
+  actions: {
+    setup() {
+      var stage = new createjs.Stage("gameDisplay");
+      this.set('stage', stage);
+
+      // grab canvas width and height for later calculations:
+      var w = stage.canvas.width;
+      this.set('w', w);
+      var h = stage.canvas.height;
+      this.set('h', h);
+
+      var manifest = [
+        {src: "TurnSpriteSheet.png", id: "Pat"},
+        {src: "Pointer.png", id: "pointer"},
+        {src: "Background.png", id: "background"},
+        {src: "Heart.png", id: "heart"}
+      ];
+
+      var loader = new createjs.LoadQueue(false);
+      loader.addEventListener("complete", this.handleComplete.bind(this));
+      loader.loadManifest(manifest, true, "../../Art/");
+      this.set('loader', loader);
+    }
   }
 });
