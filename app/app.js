@@ -4,6 +4,9 @@ import loadInitializers from 'ember-load-initializers';
 import config from './config/environment';
 
 const App = Application.extend({
+  fingerprint: {
+    enabled: false
+  },
   modulePrefix: config.modulePrefix,
   podModulePrefix: config.podModulePrefix,
   Resolver
