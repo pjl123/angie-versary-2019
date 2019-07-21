@@ -43,8 +43,10 @@ export default Component.extend({
         if (!grid[currPosition].answer) {
           totalCorrectLetters += 1;
             grid[currPosition] = {
-            answer: entry.answerKey[j].toUpperCase(),
-          };
+              answer: entry.answerKey[j].toUpperCase(),
+              orientation: entry.orientation,
+              id: currPosition
+            };
         }
         
         if (entry.orientation === 'horizontal') {
@@ -183,11 +185,22 @@ export default Component.extend({
   },
 
   actions: {
-    tallyAnswers(tally) {
+    tallyAnswers(tally, index, orientation, newOrientation) {
+      if (newOrientation) {
+        this.set('nextInputOrientation', orientation);
+      }
+
       var currentTally = this.get('currentTally');
       currentTally = currentTally + tally;
       this.set('currentTally', currentTally);
       this.set('puzzleComplete', currentTally === this.get('totalCorrectLetters'));
+
+      var nextIndex = this.get('nextInputOrientation') === 'horizontal' ? index + 1 : index + this.get('width');
+      var nextInput = document.getElementById('gridSquare-' + nextIndex);
+      if (nextInput) {
+        nextInput.focus();
+        nextInput.select();
+      }
     }
   }
 });

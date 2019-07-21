@@ -1,5 +1,5 @@
 {{#if squareInfo.answer}}
-  <Input @type="text" @value={{userInput}} @size="1" @maxlength="1" @key-up={{action "answerEntered"}} />
+  <Input @id="gridSquare-{{squareInfo.id}}" @type="text" @value={{userInput}} @size="1" @maxlength="1" @key-up={{action "answerEntered"}} @click={{action "setNewOrientation"}} />
 {{/if}}
 
 {{#if squareInfo.label}}
