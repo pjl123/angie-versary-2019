@@ -21,7 +21,7 @@
     ],
     "paths": {
       "@/*": ["./*"],
-      "https://code.createjs.com/createjs-2015.11.26.min.js": ["node_modules/@types/createjs"]
+      "https://code.createjs.com/1.0.0/createjs.min.js": ["./node_modules/@types/createjs"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
