@@ -18,15 +18,16 @@ class ActorCollection {
   winText: createjs.Text | undefined;
 }
 
+let clickCount = 0;
+let elapsedDeltas = 0;
+let complete = false;
+
 export default function MeetRick() {
   const MAX_DELTA = 600;
   const [setupObjects, setSetupObjects] = useState<SetupObjects>(new SetupObjects());
   const [actors, setActors] = useState<ActorCollection>(new ActorCollection());
   const [canvasWidth, setCanvasWidth] = useState(0);
   const [canvasHeight, setCanvasHeight] = useState(0);
-  const [clickCount, setClickCount] = useState(0);
-  const [elapsedDeltas, setElapsedDeltas] = useState(0);
-  const [complete, setComplete] = useState(false);
 
   function _handleComplete() {
     if (!setupObjects.loader) {
@@ -37,7 +38,6 @@ export default function MeetRick() {
     const background = new createjs.Bitmap(setupObjects.loader.getResult("background"));
     const back = new createjs.Shape();
     back.graphics.beginBitmapFill(background).drawRect(0, 0, background.image.width, background.image.height);
-    // back.tileW = background.image.width;
     back.y = canvasHeight - background.image.height;
     
     const actors = new ActorCollection();
@@ -84,7 +84,6 @@ export default function MeetRick() {
     setActors(actors);
 
     if (!setupObjects.stage) {
-      alert('Error setting up stage object.');
       return;
     }
     setupObjects.stage.addChild(back, pat, winText, heart, pointer);
@@ -92,7 +91,7 @@ export default function MeetRick() {
 
   function _handleTurnClick() {
     if (clickCount < 11) {
-      setClickCount(clickCount + 1);
+      clickCount = clickCount + 1;
     }
 
     _updatePatSprite();
@@ -131,11 +130,11 @@ export default function MeetRick() {
       actors.winText.visible = true;
     }
     else{
-      let newElapsed = elapsedDeltas + (event as createjs.TickerEvent).delta;
+      newElapsed = elapsedDeltas + (event as createjs.TickerEvent).delta;
       if (newElapsed >= MAX_DELTA && clickCount > 0){
         newComp = clickCount === 11;
         
-        setClickCount(clickCount - 1);
+        clickCount = clickCount - 1;
         if (!newComp) {
           _updatePatSprite();
         }
@@ -147,13 +146,26 @@ export default function MeetRick() {
     actors.pointer.x = setupObjects.stage.mouseX;
     actors.pointer.y = setupObjects.stage.mouseY;
 
-    setElapsedDeltas(newElapsed);
-    setComplete(newComp);
+    elapsedDeltas = newElapsed;
+    complete = newComp;
     setupObjects.stage.update(event);
   }
             
   function _heartClick(){
     console.log('clicked');
+  }
+
+  function _resetGame() {
+    clickCount = 0;
+    complete = false;
+
+    if (actors.heart) {
+      actors.heart.visible = false;
+    }
+
+    if (actors.winText) {
+      actors.winText.visible = false;
+    }
   }
 
   useEffect(() => {
@@ -189,7 +201,6 @@ export default function MeetRick() {
 
   useEffect(() => {
     if (!setupObjects.stage) {
-      alert('Error setting up stage object.');
       return;
     }
     
@@ -202,11 +213,17 @@ export default function MeetRick() {
   }, [actors]);
 
   return (
-    <div className="level1">
-      <h1>Happy Angie-versary!!</h1>
-      <h2>Level 1: Meet Rick</h2>
-      <canvas id="gameDisplay" width="500" height="300"></canvas>
-      <button className="btn">Reload Game</button>
+    <div className="h-screen w-full bg-black font-level1 text-[#fffaf0] flex flex-col items-center">
+      <div className="mt-6 w-2/3 flex flex-col place-items-center">
+        <div className="text-3xl">Happy Angie-versary!!</div>
+        <div className="text-2xl">Level 1: Meet Rick</div>
+        <div>
+          <canvas id="gameDisplay" width="500" height="300"></canvas>
+        </div>
+        <div>
+          <button className="btn" onClick={() => _resetGame()}>Reload Game</button>
+        </div>
+      </div>
     </div>
   );
 }
