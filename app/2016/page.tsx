@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 class SetupObjects {
   constructor() {
@@ -28,6 +29,7 @@ export default function MeetRick() {
   const [actors, setActors] = useState<ActorCollection>(new ActorCollection());
   const [canvasWidth, setCanvasWidth] = useState(0);
   const [canvasHeight, setCanvasHeight] = useState(0);
+  const router = useRouter();
 
   function _handleComplete() {
     if (!setupObjects.loader) {
@@ -152,7 +154,7 @@ export default function MeetRick() {
   }
             
   function _heartClick(){
-    console.log('clicked');
+    router.push('2016/level2');
   }
 
   function _resetGame() {
