@@ -68,7 +68,7 @@ export default function Level2() {
             </tr>
             <tr>
               <td>
-                <label htmlFor="question2">2) What is the best food to eat after going to Cavanaugh's?</label>
+                <label htmlFor="question2">2) What is the best food to eat after going to Cavanaugh&apos;s?</label>
               </td>
               <td>
                 <input type="text" className={inputClasses[1]} value={inputs[1]} onChange={(e) => _setQuestionInput(1, e.target.value)}/>
@@ -124,7 +124,7 @@ export default function Level2() {
             </tr>
             <tr>
               <td>
-                <label htmlFor="question9">9) Fill in the blank: The best Valentine's Day gift I ever got was a ______ _______?</label>
+                <label htmlFor="question9">9) Fill in the blank: The best Valentine&apos;s Day gift I ever got was a ______ _______?</label>
               </td>
               <td>
                 <input type="text" className={inputClasses[8]} value={inputs[8]} onChange={(e) => _setQuestionInput(8, e.target.value)}/>
