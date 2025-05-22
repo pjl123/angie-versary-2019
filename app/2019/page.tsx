@@ -4,14 +4,10 @@ import CrosswordGrid from "@/components/crossword-grid";
 
 export default function CrossCompatibility() {
   return (
-    <div className="cross-compatibility-container-background">
-      <div className="container cross-compatibility-container">
-        <div className="row">
-          <div className="col-xs-6 offset-1"><h3>Test your relationship knowledge with a fun puzzle:</h3></div>
-        </div>
-        <div className="row">
-          <div className="col-xs-6"><CrosswordGrid/></div>
-        </div>
+    <div className="flex justify-center bg-cyan-300 w-screen h-screen">
+      <div className="flex flex-col text-center gap-2 pt-[50px] bg-amber-300 w-2/3">
+        <div className="text-2xl">Test your relationship knowledge with a fun puzzle:</div>
+        <CrosswordGrid/>
       </div>
     </div>
   );
